@@ -1,0 +1,113 @@
+<%= form_with model: @article, local: true do |form| %>
+
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@article.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @article.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title   %>
+    <%= form.text_field :title_confirmation %>
+
+
+
+  </p>
+
+  <p>
+    <%= form.label :text %><br>
+    <%= form.text_area :text %>
+  </p>
+  <p>
+  <%= form.label :email %> <br>
+  <%= form.email_field :email, required: true %>
+</p>
+  <p>
+    <%= form.datetime_select(:created_at) %>
+  </p>
+  <br>
+  <p>
+    <%= check_box_tag(:terms) %>
+<%= label_tag(:terms, "I accept terms") %>
+  </p>
+  <p>
+    <%=distance_of_time_in_words(Time.now,Time.now+45.seconds, include_seconds: true) %>
+    <br>
+    <%= select_date()%>
+    <br>
+    <br>
+    <%= select_day(Time.now + 2.days) %>
+    <br>
+    <br>
+    <%= select_year(Date.today , start_year: 2000, end_year: 2040) %>
+    <br>
+    <br>
+     <p><%= time_ago_in_words(2.minutes.from_now) %> ago</p>
+  </p>
+  <p>
+    <b>Terms and COnditions</b> <br>
+    <%= form.label :Accept %>
+    <%= check_box_tag 'accept' %>
+    <br>
+    <%= form.label :Reject %>
+    <%= check_box_tag 'reject' %>
+  </p>
+ <br>
+ <p>
+<%= form.label :employee_id %>
+<%= collection_select(:articles , :employee_id, Employee.all, :id ,:name , {}, {multiple: false}) %>
+
+ </p>
+
+<p>
+  <%= field_set_tag do %>
+   <p><%= text_field_tag 'age' %></p>
+   <%end%>
+
+
+  </p>
+  <p>
+
+
+  <label for="file">File to Upload</label> <%= file_field_tag "file" %>
+  <%= submit_tag %>
+
+  </p>
+  <p>
+      <b>Country</b><br />
+      <%= form.radio_button :country, 'Pakistan' %> USA<br />
+      <%= form.radio_button :country, 'Turkey' %> Canada<br />
+      <%= form.radio_button :country, 'Iran' %> Mexico<br />
+  </p>
+  <p>
+    <%= select_tag "people" , "<option> David<option/>" %>
+  </p>
+  <br>
+  <p>
+    <%= number_to_currency(1238899999.33) %>
+    <br>
+    <%= number_to_human_size(1223) %>
+    <br>
+    <%= number_to_percentage(90, precision: 2)     %>
+  </p>
+  <br>
+  <%= strip_links('<a href="http://rubyonrails.org">Ruby on Rails</a>')
+
+ %>
+ <br>
+ <br>
+ <%= strip_tags("Strip <i>these</i> tags!") %>
+  <p>
+    <%= form.submit %>
+  </p>
+
+<% end %>
